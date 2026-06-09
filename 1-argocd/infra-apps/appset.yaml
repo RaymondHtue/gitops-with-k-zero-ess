@@ -1,0 +1,101 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: infra-apps
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+
+  generators:
+    # Common apps — deploy to ALL clusters
+    - matrix:
+        generators:
+          - git:
+              repoURL: https://github.com/RaymondHtue/gitops-with-k-zero-ess.git
+              revision: HEAD
+              files:
+                - path: "1-argocd/infra-apps/infra-configs/common/*.json"
+          - list:
+              elements:
+                - clusterName: k0s-2
+                  destCluster: https://192.168.100.12:6443
+                - clusterName: k0s-1
+                  destCluster: https://192.168.100.13:6443
+
+    # generate k0s-2 only
+    - matrix:
+        generators:
+          - git:
+              repoURL: https://github.com/RaymondHtue/gitops-with-k-zero-ess.git
+              revision: HEAD
+              files:
+                - path: "1-argocd/infra-apps/infra-configs/k0s-2/*.json"
+          - list:
+              elements:
+                - clusterName: k0s-2
+                  destCluster: https://kubernetes.default.svc # https://192.168.104.3:6443
+
+    # generate k0s-1 only
+    - matrix:
+        generators:
+          - git:
+              repoURL: https://github.com/RaymondHtue/gitops-with-k-zero-ess.git
+              revision: HEAD
+              files:
+                - path: "1-argocd/infra-apps/infra-configs/k0s-1/*.json"
+          - list:
+              elements:
+                - clusterName: k0s-1
+                  destCluster: https://192.168.100.13:6443 # https://kubernetes.default.svc
+
+  template:
+    metadata:
+      name: '{{.appName}}-{{.clusterName}}'
+      labels:
+        app-type: infrastructure
+        scope: '{{index .path.segments 1}}'
+    spec:
+      project: default
+
+      sources:
+        - repoURL: https://github.com/RaymondHtue/gitops-with-k-zero-ess.git
+          targetRevision: HEAD
+          ref: gitvalues
+
+        - repoURL: '{{.helmRepo}}'
+          chart: '{{.chart}}'
+          targetRevision: '{{.targetRevision}}'
+          helm:
+            releaseName: '{{.appName}}'
+            valueFiles:
+              - '$gitvalues/{{.valuesPath}}/defaults.yaml'
+              - '$gitvalues/{{.valuesPath}}/{{.clusterName}}.yaml'
+
+      destination:
+        server: '{{.destCluster}}'
+        namespace: '{{.namespace}}'
+# cilium outofsync issue fixed
+      ignoreDifferences:
+        - group: ""
+          kind: Secret
+          name: cilium-ca
+          namespace: kube-system
+          jsonPointers:
+            - /data
+        - group: ""
+          kind: Secret
+          name: hubble-server-certs
+          namespace: kube-system
+          jsonPointers:
+            - /data
+
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+          - PrunePropagationPolicy=foreground
+          - ServerSideApply=true
+          - Validate=false

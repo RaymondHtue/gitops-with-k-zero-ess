@@ -1,0 +1,16 @@
+nonIdempotentAnnotations:
+  argocd.argoproj.io/compare-options: IgnoreExtraneous
+kubeProxyReplacement: true
+operator:
+  replicas: 1
+l2announcements:
+  enabled: true
+k8sClientRateLimit:
+  qps: 10
+  burst: 20
+#hubble:
+#  tls:
+#    auto:
+#      enabled: true
+#      method: cronJob
+#

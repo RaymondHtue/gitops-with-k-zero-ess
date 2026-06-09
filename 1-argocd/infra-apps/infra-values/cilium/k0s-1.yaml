@@ -1,0 +1,2 @@
+k8sServiceHost: 192.168.100.13
+k8sServicePort: 6443

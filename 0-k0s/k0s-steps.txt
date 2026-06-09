@@ -1,0 +1,25 @@
+# Ref: https://docs.k0sproject.io/stable/k0s-multi-node/
+
+### Controller Node ###
+# Generate default k0s config
+k0s config create | sudo tee /etc/k0s/k0s.yaml
+
+# bootstrap controller node
+sudo k0s install controller -c /etc/k0s/k0s.yaml --start
+
+# generate token for worker node to join cluster
+sudo k0s token create --role=worker | tee CLUSTER_JOIN_TOKEN
+
+# generate kubeconfig with admin access
+k0s kubeconfig create --groups "system:masters" your-name > yourname.config
+export KUBECONFIG=$(realpath $(your-name.config))
+
+# check k0s status
+
+sudo k0s status
+
+### Wordker Node ###
+
+sudo k0s install worker --token-file ./CLUSTER_JOIN_TOKEN --start
+sudo k0s status
+

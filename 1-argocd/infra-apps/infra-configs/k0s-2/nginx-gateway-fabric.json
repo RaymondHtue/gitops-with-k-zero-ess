@@ -1,0 +1,8 @@
+{
+  "appName": "nginx-gateway-fabric",
+  "namespace": "nginx-gateway",
+  "helmRepo": "oci://ghcr.io/nginx/charts/nginx-gateway-fabric",
+  "chart": "nginx-gateway-fabric",
+  "targetRevision": "2.6.3",
+  "valuesPath": "1-argocd/infra-apps/infra-values/nginx-gateway-fabric"
+}

@@ -1,0 +1,50 @@
+controller:
+  replicas: 2
+
+  service:
+    type: LoadBalancer
+    annotations:
+      # Preserve client IP via the external load balancer
+      service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+
+  metrics:
+    enabled: true
+    port: 9113
+    service:
+      type: ClusterIP
+
+  health:
+    enabled: true
+    port: 8081
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+# NGINX data plane settings
+nginx:
+  workerProcesses: auto
+  logLevel: info
+
+# Gateway API configuration
+gateway:
+  gatewayClassName: nginx
+  listeners:
+    - name: http
+      port: 80
+      protocol: HTTP
+      allowedRoutes:
+        namespaces:
+          from: All
+    - name: https
+      port: 443
+      protocol: HTTPS
+      tls:
+        mode: Terminate
+      allowedRoutes:
+        namespaces:
+          from: All

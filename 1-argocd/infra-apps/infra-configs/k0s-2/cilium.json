@@ -1,0 +1,8 @@
+{
+  "appName": "cilium",
+  "namespace": "kube-system",
+  "helmRepo": "https://helm.cilium.io/",
+  "chart": "cilium",
+  "targetRevision": "1.18.0",
+  "valuesPath": "infra-values/cilium"
+}

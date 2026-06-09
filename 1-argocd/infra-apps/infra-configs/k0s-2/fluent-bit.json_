@@ -1,0 +1,8 @@
+{
+  "appName": "fluent-bit",
+  "namespace": "fluent-bit",
+  "helmRepo": "https://fluent.github.io/helm-charts",
+  "chart": "fluent-bit",
+  "targetRevision": "0.48.8",
+  "valuesPath": "1-argocd/infra-apps/infra-values/fluent-bit"
+}
