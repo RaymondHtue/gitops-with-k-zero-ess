@@ -4,5 +4,5 @@
   "helmRepo": "https://helm.cilium.io/",
   "chart": "cilium",
   "targetRevision": "1.18.0",
-  "valuesPath": "infra-values/cilium"
+  "valuesPath": "1-argocd/infra-apps/infra-values/cilium"
 }

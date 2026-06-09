@@ -1,0 +1,16 @@
+apiVersion: "cilium.io/v2alpha1"
+kind: CiliumL2AnnouncementPolicy
+metadata:
+  name: "nginx-gateway-l2-policy"
+spec:
+  serviceSelector:
+    matchLabels:
+      app.kubernetes.io/name: nginx-gateway-fabric
+  nodeSelector:
+    matchExpressions:
+      - key: node-role.kubernetes.io/control-plane
+        operator: DoesNotExist
+  interfaces:
+    - "^eth[0-9]+"
+    - "^ens[0-9]+"
+  loadBalancerIPs: true

@@ -18,8 +18,7 @@ export KUBECONFIG=$(realpath $(your-name.config))
 
 sudo k0s status
 
-### Wordker Node ###
+### Wordker Node 1 ###
 
 sudo k0s install worker --token-file ./CLUSTER_JOIN_TOKEN --start
 sudo k0s status
-
