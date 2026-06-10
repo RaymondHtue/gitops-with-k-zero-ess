@@ -9,14 +9,7 @@ spec:
   - name: http
     port: 80
     protocol: HTTP
-    # Omitting the 'hostname' field creates an HTTP catch-all listener
-    allowedRoutes:
-      namespaces:
-        from: All
-  listeners:
-  - name: https
-    port: 443 
-    protocol: HTTPS
+    hostname: "*.example.com" 
     allowedRoutes:
       namespaces:
         from: All
