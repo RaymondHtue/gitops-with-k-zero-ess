@@ -2,24 +2,24 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - ../../../base
-  - namespace.yaml
+  - ../../base
+  - ./namespace.yaml
 
-namespace: testing-stage-blue
+namespace: testing-stage-green
 namePrefix: stage-
-nameSuffix: -blue
+nameSuffix: -green
 
 labels:
   - includeSelectors: true
     pairs:
-      environment: stage-blue
+      environment: stage-green
 
 patches:
   - path: deployment-patch.yaml
   - patch: |-
       - op: replace
         path: /spec/hostnames/0
-        value: "stage-nginx-blue.example.com"
+        value: "stage-nginx-green.example.com"
     target:
       kind: HTTPRoute
   - patch: |-
@@ -34,7 +34,7 @@ patches:
     patch: |-
       - op: replace
         path: /spec/template/spec/containers/0/name
-        value: stage-nginx-blue
+        value: stage-nginx-green
 
 replacements:
   - source:

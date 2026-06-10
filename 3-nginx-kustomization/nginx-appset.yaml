@@ -15,10 +15,9 @@ spec:
       revision: HEAD
       directories:
        - path: 3-nginx-kustomization/overlays/*
-       - path: 3-nginx-kustomization/overlays/*/*
   template:
     metadata:
-      name: 'nginx-{{index .path.segments 2}}-{{path.basename}}'
+      name: 'nginx-{{path.basename}}'
     spec:
       project: default
       source:
