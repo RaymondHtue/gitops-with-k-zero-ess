@@ -44,3 +44,4 @@ spec:
           - ServerSideApply=true
           - PrunePropagationPolicy=foreground
           - Validate=false
+          - RespectIgnoreDifferences=true
