@@ -19,6 +19,13 @@ spec:
     metadata:
       name: 'nginx-{{path.basename}}'
     spec:
+      ignoreDifferences:
+        - group: gateway.networking.k8s.io
+          kind: HTTPRoute
+          managedFieldsManagers:
+            - nginx-gateway
+          jsonPointers:
+            - /status
       project: default
       source:
         repoURL:  https://github.com/RaymondHtue/gitops-with-k-zero-ess.git
