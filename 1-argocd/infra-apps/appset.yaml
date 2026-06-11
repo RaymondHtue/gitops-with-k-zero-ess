@@ -10,7 +10,7 @@ spec:
   goTemplateOptions: ["missingkey=error"]
 
   generators:
-    # Common apps — deploy to ALL clusters
+    # Common apps - deploy to ALL clusters
     - matrix:
         generators:
           - git:
@@ -21,9 +21,9 @@ spec:
           - list:
               elements:
                 - clusterName: k0s-2
-                  destCluster: https://192.168.100.12:6443
+                  destCluster: https://192.168.104.3:6443
                 - clusterName: k0s-1
-                  destCluster: https://192.168.100.13:6443
+                  destCluster: https://192.168.104.50:6443
 
     # generate k0s-2 only
     - matrix:
@@ -36,7 +36,7 @@ spec:
           - list:
               elements:
                 - clusterName: k0s-2
-                  destCluster: https://kubernetes.default.svc # https://192.168.104.3:6443
+                  destCluster: https://kubernetes.default.svc # or https://192.168.104.3:6443
 
     # generate k0s-1 only
     - matrix:

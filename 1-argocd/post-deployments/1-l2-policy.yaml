@@ -11,4 +11,4 @@ spec:
     matchExpressions:
       - key: node-role.kubernetes.io/control-plane
         operator: DoesNotExist
-  # serviceSelector intentionally omitted — applies to all LoadBalancer services
+  # serviceSelector intentionally omitted - applies to all LoadBalancer services

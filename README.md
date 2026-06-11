@@ -12,19 +12,19 @@ A GitOps learning lab demonstrating an end-to-end workflow: bootstrapping a **k0
 │   └── post-deployments/   #   Cilium LB pool, L2 policy, NGF Gateway
 ├── 2-app-deployments/      # Raw Kubernetes manifests (nginx webserver)
 │   └── nginx-webserver/
-└── 3-nginx-kustomization/  # Kustomize base + dev/stage(blue/green) overlays
+└── 3-nginx-kustomization/  # Kustomize base + dev/bludestage/greenstage) overlays
     ├── base/
     └── overlays/
         ├── dev/
         └── stage/          # blue/green sub-overlays
 ```
 
-### `0-k0s/` — Cluster Bootstrap
+### `0-k0s/` - Cluster Bootstrap
 
-- `k0s-steps.txt` — step-by-step commands to install a k0s controller and join worker nodes.
-- `k0s.conf` — full `ClusterConfig`: pod CIDR `10.244.0.0/16`, service CIDR `10.96.0.0/12`, etcd backend, custom CNI provider (Cilium installed separately), kube-proxy disabled.
+- `k0s-steps.txt` - step-by-step commands to install a k0s controller and join worker nodes.
+- `k0s.conf` - full `ClusterConfig`: pod CIDR `10.244.0.0/16`, service CIDR `10.96.0.0/12`, etcd backend, custom CNI provider (Cilium installed separately), kube-proxy disabled.
 
-### `1-argocd/` — Infrastructure via Argo CD
+### `1-argocd/` - Infrastructure via Argo CD
 | Directory | Description |
 |---|---|
 | `argo-installation.sh` | installs Argo CD into the cluster. |
@@ -58,7 +58,7 @@ A GitOps learning lab demonstrating an end-to-end workflow: bootstrapping a **k0
 |---|---|
 | **k0s** | Lightweight Kubernetes distribution (controller + worker, etcd backend) |
 | **Cilium** v1.18 | CNI, kube-proxy replacement, L2 announcements, LB IPAM |
-| **Argo CD** | GitOps engine — ApplicationSet with dynamic goTemplating, matrix generators, multi-cluster targeting |
+| **Argo CD** | GitOps engine - ApplicationSet with dynamic goTemplating, matrix generators, multi-cluster targeting |
 | **Kustomize** | Kustomization (patches, configMapGenerator, replacements, overlays) |
 | **NGINX Gateway Fabric** v2.6 | Kubernetes Gateway API controller |
 | **Longhorn** v1.12 | Distributed block storage (configured, currently disabled, ready to use) |
