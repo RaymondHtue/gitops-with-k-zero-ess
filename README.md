@@ -50,7 +50,7 @@ A GitOps learning lab demonstrating an end-to-end workflow: bootstrapping a **k0
 |---|---|
 | **base/** | hardened Deployment (`**non-root, readOnlyRootFS, liveness, readiness,health probes), Service, HTTPRoute.**` |
 | **overlays/dev/** | `testing-dev` namespace, unprivileged image, lower resources, `nginx-dev.example.com`.|
-| **overlays/stage/** | blue/green sub-overlays in `testing-stage-blue` and `testing-stage-green` namespaces with distinct hostnames and color-themed pages. |
+| **overlays/{bluestage,greenstage}** | blue/green sub-overlays in `testing-stage-blue` and `testing-stage-green` namespaces with distinct hostnames and color-themed pages. |
 
 ## Tools
 
